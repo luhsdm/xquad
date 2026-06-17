@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XQuad AI</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+    }
+
+    .container {
+      width: 600px;
+    }
+
+    .chat {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      min-height: 300px;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+
+    input {
+      width: 75%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
+
+    .loading {
+      opacity: 0.6;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🚀 XQuad AI</h2>
+
+  <div id="chat" class="chat"></div>
+
+  <input id="input" placeholder="Digite sua pergunta..." />
+  <button onclick="send()">Enviar</button>
+</div>
+
+<script>
+async function send() {
+  const input = document.getElementById("input");
+  const chat = document.getElementById("chat");
+
+  const message = input.value;
+  if (!message) return;
+
+  chat.innerHTML += `\n👤 Você:\n${message}\n`;
+  input.value = "";
+
+  chat.innerHTML += `\n🤖 Pensando...\n`;
+
+  const res = await fetch("http://localhost:3000/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message })
+  });
+
+  const data = await res.json();
+
+  chat.innerHTML += `\n🤖 IA:\n${data.text}\n`;
+
+chat.innerHTML += `\n🧠 Squads usados: ${data.squads.join(", ")}\n`;
+}
+</script>
+
+</body>
+</html>

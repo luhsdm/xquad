@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Estratégico v2 — Mentoria CBR 2026.2 | Didática Radio</title>
+<style>
+  :root {
+    --navy: #0A1628; --blue: #1E4D8C; --blue-light: #4A90D9; --blue-pale: #EBF3FB;
+    --green: #27AE60; --green-pale: #E9F7EF; --yellow: #F39C12; --yellow-pale: #FEF9E7;
+    --red: #E74C3C; --red-pale: #FDEDEC; --gray: #7F8C8D; --gray-light: #F4F6F7;
+    --white: #FFFFFF; --text: #2C3E50; --border: #D5D8DC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.7; color: var(--text); background: #F7F9FC; }
+
+  .cover { background: var(--navy); color: white; padding: 56px 80px; position: relative; overflow: hidden; }
+  .cover::before { content:''; position:absolute; right:-80px; top:-80px; width:360px; height:360px; border-radius:50%; background:rgba(74,144,217,0.10); }
+  .cover::after  { content:''; position:absolute; left:-40px; bottom:-60px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.04); }
+  .cover-tag { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--blue-light); margin-bottom:14px; }
+  .cover h1 { font-size:30px; font-weight:800; line-height:1.2; margin-bottom:8px; }
+  .cover h2 { font-size:17px; font-weight:400; color:rgba(255,255,255,0.65); margin-bottom:28px; }
+  .cover-meta { display:flex; gap:36px; flex-wrap:wrap; }
+  .cover-meta-item { font-size:13px; }
+  .cover-meta-item span { display:block; font-size:10px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1px; margin-bottom:2px; }
+
+  /* ALERTA NO TOPO */
+  .sprint-banner { background:#E74C3C; color:white; padding:14px 80px; display:flex; align-items:center; gap:16px; font-weight:700; font-size:13px; }
+  .sprint-banner .pill { background:rgba(255,255,255,0.2); border-radius:20px; padding:4px 14px; font-size:12px; white-space:nowrap; }
+
+  .container { max-width:960px; margin:0 auto; padding:40px 60px 80px; }
+
+  /* MÉTRICAS DIÁRIAS — DESTAQUE */
+  .metrics-bar { background:var(--navy); border-radius:10px; padding:28px 32px; margin-bottom:32px; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .metric-item { text-align:center; }
+  .metric-item .val { font-size:28px; font-weight:800; color:white; line-height:1; }
+  .metric-item .val.ok { color:#2ECC71; }
+  .metric-item .val.warn { color:#F39C12; }
+  .metric-item .lbl { font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:6px; }
+  .metric-item .sub { font-size:12px; color:rgba(255,255,255,0.7); margin-top:3px; }
+
+  .toc { background:white; border:1px solid var(--border); border-radius:8px; padding:24px 28px; margin-bottom:32px; }
+  .toc h3 { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:14px; }
+  .toc ol { list-style:decimal; padding-left:20px; columns:2; column-gap:36px; }
+  .toc li { font-size:13px; padding:3px 0; color:var(--blue); break-inside:avoid; }
+
+  .section { background:white; border:1px solid var(--border); border-radius:8px; margin-bottom:28px; overflow:hidden; }
+  .section-header { background:var(--navy); color:white; padding:16px 26px; display:flex; align-items:center; gap:12px; }
+  .section-header .num { background:rgba(255,255,255,0.15); border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; flex-shrink:0; }
+  .section-header h2 { font-size:15px; font-weight:700; }
+  .section-header .badge { margin-left:auto; background:rgba(255,255,255,0.15); border-radius:20px; padding:3px 12px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .section-body { padding:26px 30px; }
+
+  .sub { margin-bottom:26px; }
+  .sub:last-child { margin-bottom:0; }
+  .sub h3 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:10px; padding-bottom:5px; border-bottom:2px solid var(--blue-pale); }
+  .sub h4 { font-size:13px; font-weight:700; color:var(--blue); margin:12px 0 5px; }
+  p { margin-bottom:10px; }
+  ul, ol { padding-left:20px; margin-bottom:10px; }
+  li { margin-bottom:5px; }
+
+  .card-grid { display:grid; gap:14px; margin-bottom:14px; }
+  .card-grid-3 { grid-template-columns:repeat(3,1fr); }
+  .card-grid-2 { grid-template-columns:repeat(2,1fr); }
+  .card-grid-4 { grid-template-columns:repeat(4,1fr); }
+  .card { border-radius:8px; padding:16px; }
+  .card-green { background:var(--green-pale); border:1px solid #A9DFBF; }
+  .card-yellow { background:var(--yellow-pale); border:1px solid #FAD7A0; }
+  .card-red { background:var(--red-pale); border:1px solid #F5B7B1; }
+  .card-blue { background:var(--blue-pale); border:1px solid #AED6F1; }
+  .card-navy { background:var(--navy); color:white; }
+  .card h4 { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+  .card-green h4 { color:var(--green); } .card-yellow h4 { color:#D68910; } .card-red h4 { color:var(--red); } .card-blue h4 { color:var(--blue); } .card-navy h4 { color:var(--blue-light); }
+  .card .metric { font-size:22px; font-weight:800; line-height:1.1; margin-bottom:4px; }
+  .card-green .metric { color:var(--green); } .card-yellow .metric { color:var(--yellow); } .card-red .metric { color:var(--red); } .card-navy .metric { color:white; }
+  .card p { font-size:12px; margin:0; } .card-navy p { color:rgba(255,255,255,0.75); }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:12px; }
+  th { background:var(--navy); color:white; padding:10px 14px; text-align:left; font-size:12px; font-weight:700; letter-spacing:.5px; }
+  td { padding:9px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:nth-child(even) td { background:var(--gray-light); }
+  tr:last-child td { border-bottom:none; }
+  .td-green { color:var(--green); font-weight:700; } .td-red { color:var(--red); font-weight:700; } .td-yellow { color:#D68910; font-weight:700; }
+
+  .copy-block { background:var(--gray-light); border-left:4px solid var(--blue); border-radius:0 6px 6px 0; padding:14px 18px; margin:10px 0; font-style:italic; color:var(--text); font-size:13px; line-height:1.6; }
+  .copy-block strong { font-style:normal; color:var(--navy); }
+
+  .highlight { border-radius:8px; padding:14px 18px; margin:14px 0; font-size:13px; }
+  .highlight-blue { background:var(--blue-pale); border:1px solid #AED6F1; }
+  .highlight-green { background:var(--green-pale); border:1px solid #A9DFBF; }
+  .highlight-yellow { background:var(--yellow-pale); border:1px solid #FAD7A0; }
+  .highlight-red { background:var(--red-pale); border:1px solid #F5B7B1; }
+  .highlight strong { color:var(--navy); }
+
+  .checklist { list-style:none; padding:0; }
+  .checklist li { padding:6px 0 6px 28px; position:relative; border-bottom:1px solid var(--border); font-size:13px; }
+  .checklist li:last-child { border-bottom:none; }
+  .checklist li::before { content:'✅'; position:absolute; left:0; }
+
+  /* SPRINT SEMANAS */
+  .sprint-weeks { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:16px 0; }
+  .week-card { background:var(--gray-light); border-radius:8px; padding:16px; border-top:4px solid var(--blue); }
+  .week-card.w1 { border-color:#E74C3C; }
+  .week-card.w2 { border-color:#E67E22; }
+  .week-card.w3 { border-color:#27AE60; }
+  .week-card.w4 { border-color:#3498DB; }
+  .week-card .wnum { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+  .week-card.w1 .wnum { color:#E74C3C; } .week-card.w2 .wnum { color:#E67E22; }
+  .week-card.w3 .wnum { color:#27AE60; } .week-card.w4 .wnum { color:#3498DB; }
+  .week-card .wtarget { font-size:20px; font-weight:800; color:var(--navy); margin-bottom:4px; }
+  .week-card p { font-size:11px; margin:0; line-height:1.5; }
+
+  /* FUNIL */
+  .funnel-layer { border-radius:8px; padding:14px 18px; margin-bottom:6px; }
+  .funnel-topo { background:#D6EAF8; border:1px solid #AED6F1; }
+  .funnel-meio { background:#D5F5E3; border:1px solid #A9DFBF; }
+  .funnel-fundo { background:#FDEBD0; border:1px solid #FAD7A0; }
+  .funnel-layer h4 { font-size:13px; font-weight:800; margin-bottom:4px; }
+  .funnel-topo h4 { color:var(--blue); } .funnel-meio h4 { color:var(--green); } .funnel-fundo h4 { color:#D35400; }
+  .funnel-layer p { font-size:12px; margin:0; }
+
+  /* ROTEIRO */
+  .roteiro-step { background:var(--gray-light); border-radius:8px; padding:14px 18px; margin-bottom:8px; border-left:4px solid var(--blue); }
+  .roteiro-step.hook { border-left-color:#E74C3C; }
+  .roteiro-step.conflict { border-left-color:#E67E22; }
+  .roteiro-step.turn { border-left-color:#27AE60; }
+  .roteiro-step.cta { border-left-color:#3498DB; }
+  .roteiro-step h4 { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+  .roteiro-step.hook h4 { color:#E74C3C; } .roteiro-step.conflict h4 { color:#E67E22; }
+  .roteiro-step.turn h4 { color:#27AE60; } .roteiro-step.cta h4 { color:#3498DB; }
+  .roteiro-step blockquote { font-style:italic; font-size:13px; line-height:1.6; }
+
+  .squad-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .squad-tag { background:var(--blue-pale); border:1px solid #AED6F1; border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; color:var(--blue); }
+  .score { display:inline-flex; align-items:center; gap:4px; background:var(--green); color:white; border-radius:20px; padding:3px 10px; font-size:11px; font-weight:700; }
+
+  .aviso { background:#FFF3CD; border:1px solid #FFEEBA; border-radius:6px; padding:10px 14px; font-size:12px; color:#856404; margin:10px 0; }
+  .aviso strong { color:#533f03; }
+
+  .footer { background:var(--navy); color:rgba(255,255,255,0.5); text-align:center; padding:22px 40px; font-size:12px; }
+  .footer strong { color:white; }
+
+  @media(max-width:700px){
+    .container{padding:20px;} .card-grid-3,.card-grid-4{grid-template-columns:1fr;} .card-grid-2{grid-template-columns:1fr;}
+    .sprint-weeks{grid-template-columns:repeat(2,1fr);} .metrics-bar{grid-template-columns:repeat(2,1fr);} .toc ol{columns:1;} .cover{padding:40px 24px;} .cover h1{font-size:22px;} .sprint-banner{padding:14px 24px;}
+  }
+  @media print { body{background:white;} .container{padding:20px 40px;} .section{break-inside:avoid;} }
+</style>
+</head>
+<body>
+
+<!-- BANNER SPRINT -->
+<div class="sprint-banner">
+  🔴 SPRINT JUNHO 2026
+  <span class="pill">30 dias exatos</span>
+  <span class="pill">Meta: 20–25 alunos</span>
+  <span class="pill">Turma inicia: julho/2026</span>
+  <span style="margin-left:auto;font-weight:400">Não há 60–90 dias. O relógio corre.</span>
+</div>
+
+<!-- CAPA -->
+<div class="cover">
+  <div class="cover-tag">Briefing Estratégico v2 · Sprint 30 Dias</div>
+  <h1>Mentoria CBR 2026.2<br>Captação em 30 Dias — Junho</h1>
+  <h2>Didática Radio · Dr. Daniel Lucena</h2>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span>Produto</span>Mentoria CBR · R$14.000</div>
+    <div class="cover-meta-item"><span>Meta</span>20–25 alunos / junho</div>
+    <div class="cover-meta-item"><span>Mídia</span>R$100/dia (R$3.000/mês)</div>
+    <div class="cover-meta-item"><span>Gestão</span>R$100/dia (separado)</div>
+    <div class="cover-meta-item"><span>Deadline</span>30/06/2026</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- MÉTRICAS ESSENCIAIS -->
+<div class="metrics-bar">
+  <div class="metric-item">
+    <div class="val ok">1</div>
+    <div class="lbl">Venda mínima / dia</div>
+    <div class="sub">para bater 25 em 30 dias</div>
+  </div>
+  <div class="metric-item">
+    <div class="val ok">6–7</div>
+    <div class="lbl">Vendas / semana</div>
+    <div class="sub">checkpoint semanal</div>
+  </div>
+  <div class="metric-item">
+    <div class="val warn">150–200</div>
+    <div class="lbl">Leads necessários</div>
+    <div class="sub">CPL alvo: R$15–20</div>
+  </div>
+  <div class="metric-item">
+    <div class="val warn">40–50%</div>
+    <div class="lbl">Close rate na call</div>
+    <div class="sub">leads qualificados só</div>
+  </div>
+</div>
+
+<!-- ÍNDICE -->
+<div class="toc">
+  <h3>Índice</h3>
+  <ol>
+    <li>Diagnóstico da Conta Meta Ads</li>
+    <li>Estratégia de Funil — 3 Camadas</li>
+    <li>A Oferta — Stack de Valor</li>
+    <li>Posicionamento de Marca</li>
+    <li>Roteiro do Dr. Daniel (Storytelling)</li>
+    <li>Copies Prontos — 3 Níveis do Funil</li>
+    <li>Criativos — Templates por Arquétipo</li>
+    <li>Projeções — Sprint 30 Dias</li>
+    <li>Sprint Semanal — Metas e Checkpoints</li>
+    <li>Proposta de Gestão + Próximos Passos</li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════ 1. DIAGNÓSTICO ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">1</div>
+    <h2>Diagnóstico da Conta Meta Ads</h2>
+    <div class="badge">🎯 Traffic Masters · Score 8/10</div>
+  </div>
+  <div class="section-body">
+    <div class="sub">
+      <h3>O que os dados históricos revelam (35 campanhas · R$5.900 gastos)</h3>
+      <div class="card-grid card-grid-3">
+        <div class="card card-green">
+          <h4>✅ O que funciona</h4>
+          <div class="metric">R$0,13</div>
+          <p><strong>CPC — Case Maffucci</strong><br>4.289 cliques · R$557 gastos<br>Audiência adora caso clínico</p>
+        </div>
+        <div class="card card-yellow">
+          <h4>⚡ Base para escalar</h4>
+          <div class="metric">R$0,34</div>
+          <p><strong>CPC — Form nativo Intensivão</strong><br>708 cliques · lead gen direto<br>Melhor canal de captação</p>
+        </div>
+        <div class="card card-red">
+          <h4>🚫 Nunca mais</h4>
+          <div class="metric">R$13–47</div>
+          <p><strong>CPC — WhatsApp lead gen</strong><br>Caríssimo, sem conversão<br>Não repetir em hipótese alguma</p>
+        </div>
+      </div>
+    </div>
+    <div class="sub">
+      <h3>Tabela completa de campanhas relevantes</h3>
+      <table>
+        <tr><th>Campanha</th><th>Métrica</th><th>Volume</th><th>Decisão para junho</th></tr>
+        <tr><td>Case clínico (Maffucci)</td><td>CPC R$0,13</td><td>4.289 cliques</td><td class="td-green">ESCALAR — topo de funil</td></tr>
+        <tr><td>Form nativo (Intensivão)</td><td>CPC R$0,34</td><td>708 cliques</td><td class="td-green">PRIORIDADE — captação leads</td></tr>
+        <tr><td>Reconhecimento radiologia</td><td>CPM R$1,14</td><td>194.712 impressões</td><td class="td-green">MANTER — aquecimento barato</td></tr>
+        <tr><td>Leads site (mentoria)</td><td>CPC R$2,01</td><td>559 cliques</td><td class="td-yellow">A/B com form nativo</td></tr>
+        <tr><td>Vendas (Intensivão)</td><td>CPC R$4,23</td><td>—</td><td class="td-yellow">AJUSTAR copy e landing</td></tr>
+        <tr><td>Seguidores BR</td><td>CPC R$0,24</td><td>3.233 cliques</td><td class="td-green">BASE QUENTE p/ remarketing</td></tr>
+        <tr><td>WhatsApp lead gen</td><td>CPC R$13–47</td><td>—</td><td class="td-red">PAUSAR PERMANENTEMENTE</td></tr>
+      </table>
+    </div>
+    <div class="highlight highlight-blue">
+      <strong>Insight chave:</strong> O público de radiologia no Brasil ainda é barato (CPM R$1–8). A conta tem histórico suficiente para não começar do zero. O form nativo é o canal de captação mais eficiente. Com R$100/dia focado nos criativos certos, a conta tem tudo para operar.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 2. FUNIL ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">2</div>
+    <h2>Estratégia de Funil — 3 Camadas</h2>
+    <div class="badge">🎯 Traffic Masters</div>
+  </div>
+  <div class="section-body">
+    <div class="funnel-layer funnel-topo">
+      <h4>🔵 TOPO — Aquecimento (50% do budget · R$50/dia)</h4>
+      <p><strong>Objetivo:</strong> Conteúdo educativo impulsionado (casos clínicos, CBR, radiologia). CPM esperado R$5–10. Aquecer 30k–60k médicos radiologistas em 30 dias.</p>
+    </div>
+    <div class="funnel-layer funnel-meio">
+      <h4>🟢 MEIO — Captação de Leads (35% · R$35/dia)</h4>
+      <p><strong>Objetivo:</strong> Form nativo Meta prioritário + landing page em A/B. CPL alvo R$15–20. Meta: 150–200 leads qualificados em 30 dias.</p>
+    </div>
+    <div class="funnel-layer funnel-fundo">
+      <h4>🟠 FUNDO — Remarketing e Fechamento (15% · R$15/dia)</h4>
+      <p><strong>Objetivo:</strong> Quem engajou mas não virou lead + quem virou lead mas não agendou call. Urgência de vagas. CPA alvo R$1.800–3.000.</p>
+    </div>
+    <div class="highlight highlight-yellow">
+      <strong>Regra de sprint:</strong> Nos primeiros 7 dias, 100% do budget vai para topo + captação (validar criativos). A partir do dia 8, ligar o remarketing para as primeiras audiências aquecidas.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 3. OFERTA ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">3</div>
+    <h2>A Oferta — Stack de Valor</h2>
+    <div class="badge">💼 Hormozi Squad · Score 8/10</div>
+  </div>
+  <div class="section-body">
+    <div class="squad-tags">
+      <span class="squad-tag">hormozi-squad</span>
+      <span class="squad-tag">copy-squad</span>
+    </div>
+    <div class="aviso">
+      <strong>⚠️ Restrição de compliance:</strong> Não usar linguagem de "aprovação garantida" em nenhum material — a aprovação no CBR não pode ser prometida. Usar sempre linguagem de método, preparação e resultado orientado.
+    </div>
+
+    <div class="sub">
+      <h3>Transformação prometida (sem prometer aprovação)</h3>
+      <div class="copy-block">
+        <strong>"A preparação mais estruturada para o CBR — com o método que já ajudou dezenas de radiologistas a chegarem prontos para o exame."</strong>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Stack de Valor</h3>
+      <table>
+        <tr><th>Item</th><th>Valor percebido</th><th>Descrição</th></tr>
+        <tr><td><strong>CORE: Mentoria CBR</strong></td><td class="td-green">Principal</td><td>Método completo + aulas + acesso durante a preparação</td></tr>
+        <tr><td>Bônus 1: Comunidade CBR</td><td>R$800</td><td>Networking com radiologistas que passaram pelo mesmo processo</td></tr>
+        <tr><td>Bônus 2: Sessão de orientação individual</td><td>R$500</td><td>Plano de estudo adaptado ao seu perfil e rotina</td></tr>
+        <tr><td>Bônus 3: E-book "Método de Preparação CBR"</td><td>R$300</td><td>Guia completo com cronograma e foco nas áreas mais cobradas</td></tr>
+        <tr><td>Bônus 4: Acervo de casos clínicos</td><td>R$600</td><td>Gravações de turmas anteriores + banco de casos</td></tr>
+      </table>
+      <div class="highlight highlight-green">
+        <strong>Posicionamento financeiro:</strong> R$14.000 ÷ 12 meses = R$1.167/mês. Compare com o custo de <em>não</em> estar preparado: mais 1 ano de preparação, tempo perdido, oportunidades adiadas. O investimento se paga na primeira semana de trabalho como especialista credenciado.
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Script de fechamento na call (perguntas de diagnóstico)</h3>
+      <ul>
+        <li>"O que está travando sua preparação para o CBR hoje?"</li>
+        <li>"Quanto tempo você leva tentando se preparar sozinho? O que isso está custando em tempo e energia?"</li>
+        <li>"Como você imagina sua carreira 12 meses depois de obter a certificação CBR?"</li>
+        <li>"Se você tivesse o caminho mapeado e suporte durante todo o processo, o que mudaria?"</li>
+        <li>"O que te impediria de começar agora?" <em>(tratar objeção na hora)</em></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3>Urgência verdadeira — sem fabricação</h3>
+      <div class="card-grid card-grid-2">
+        <div class="card card-red">
+          <h4>🔴 Escassez real</h4>
+          <p>25 vagas disponíveis. A turma inicia em <strong>julho/2026</strong>. Quando fechar, fecha. Não tem próxima turma em agosto.</p>
+        </div>
+        <div class="card card-yellow">
+          <h4>⏰ Urgência temporal</h4>
+          <p>Prova CBR tem data fixa. Cada semana sem preparação estruturada é uma semana a menos de vantagem sobre outros candidatos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 4. POSICIONAMENTO ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">4</div>
+    <h2>Posicionamento de Marca</h2>
+    <div class="badge">🏷️ Brand Squad · Score 8/10</div>
+  </div>
+  <div class="section-body">
+    <div class="squad-tags"><span class="squad-tag">brand-squad</span></div>
+
+    <div class="sub">
+      <h3>Arquétipo e posicionamento</h3>
+      <div class="card-grid card-grid-2">
+        <div class="card card-navy">
+          <h4>Arquétipo de Marca</h4>
+          <div class="metric">O Sábio</div>
+          <p>Autoridade técnica, domínio real do conteúdo. Médicos compram de quem sabe mais — não de quem mais grita.</p>
+        </div>
+        <div class="card card-blue">
+          <h4>Mensagem central</h4>
+          <div class="metric" style="color:var(--navy);font-size:16px">"O método que mais<br>prepara para o CBR"</div>
+          <p>Sem prometer resultado. Comunicando excelência do processo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Construção de autoridade — ações imediatas</h3>
+      <ul>
+        <li><strong>Prova social de processo:</strong> Publicar depoimentos de ex-alunos focados na experiência da preparação (<em>"aprendi mais em 8 semanas do que em 1 ano sozinho"</em>), não na aprovação em si.</li>
+        <li><strong>Taxa de alunos que chegaram ao exame preparados:</strong> "X% dos nossos alunos avaliam a preparação como acima do esperado" — dado seguro, real, sem prometer resultado.</li>
+        <li><strong>Webinars públicos:</strong> Semanal sobre CBR. Médicos compram de quem ensina. Demonstrar profundidade antes de vender.</li>
+        <li><strong>Cases clínicos orgânicos:</strong> Continuar com o que funcionou (Maffucci). Conteúdo educativo = confiança acumulada.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3>Sequência de e-mail / WhatsApp para leads captados</h3>
+      <table>
+        <tr><th>#</th><th>Timing</th><th>Assunto / Mensagem</th><th>Objetivo</th></tr>
+        <tr><td>1</td><td>Imediato</td><td>"Obrigado pelo interesse — próximo passo"</td><td>Agendar call enquanto o lead está quente</td></tr>
+        <tr><td>2</td><td>+24h</td><td>"O que os alunos da turma 2026.1 disseram sobre a preparação"</td><td>Prova social de processo</td></tr>
+        <tr><td>3</td><td>+48h</td><td>"Sua vaga pode fechar antes que você decida"</td><td>Urgência real das 25 vagas</td></tr>
+        <tr><td>4</td><td>+72h</td><td>"Restam X vagas — essa é a última comunicação"</td><td>Fechar indecisos com escassez final</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 5. ROTEIRO ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">5</div>
+    <h2>Roteiro do Dr. Daniel — Vídeo Principal</h2>
+    <div class="badge">📖 Storytelling · Score 9/10</div>
+  </div>
+  <div class="section-body">
+    <div class="squad-tags">
+      <span class="squad-tag">storytelling</span>
+      <span class="squad-tag">copy-squad</span>
+      <span class="score">⭐ 9/10</span>
+    </div>
+    <div class="aviso"><strong>✅ Aprovado pelo gestor.</strong> Manter este roteiro. Cuidado apenas com linguagem de resultado garantido — falar sempre de preparação e processo.</div>
+
+    <div class="roteiro-step hook">
+      <h4>🔴 Hook — 0 a 10s</h4>
+      <blockquote>"Você já se sentiu à beira de desistir enquanto prepara seu CBR? Eu entendo exatamente esse sentimento."</blockquote>
+    </div>
+    <div class="roteiro-step conflict">
+      <h4>🟠 Conflito — 10 a 40s</h4>
+      <blockquote>"A pressão é enorme. O medo de não estar à altura, a sensação de estudar muito sem avançar, a dúvida de estar no caminho certo. Eu vi isso acontecer com dezenas de radiologistas — e aprendi que o problema quase nunca é esforço. É falta de método."</blockquote>
+    </div>
+    <div class="roteiro-step turn">
+      <h4>🟢 Virada — 40 a 70s</h4>
+      <blockquote>"Quando estruturamos a preparação com o método certo, tudo muda. Você para de estudar o que não vai cair, começa a trabalhar os casos certos, e chega ao exame com uma clareza completamente diferente. É isso que a Mentoria CBR faz."</blockquote>
+    </div>
+    <div class="roteiro-step cta">
+      <h4>🔵 CTA — 70 a 90s</h4>
+      <blockquote>"A turma 2026.2 tem vagas limitadas e começa em julho. Se você quer chegar ao exame com a melhor preparação possível, o link está aqui. Não enfrente isso sem estrutura."</blockquote>
+    </div>
+
+    <div class="highlight highlight-blue">
+      <strong>Produção:</strong> Câmera direta, Dr. Daniel falando de verdade — consultório ou ambiente clínico. Autenticidade supera produção em Meta Ads. Não precisa de estúdio. 60–90s para Reels/Stories, versão 2–3min para Feed.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 6. COPIES ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">6</div>
+    <h2>Copies Prontos — 3 Níveis do Funil</h2>
+    <div class="badge">✍️ Copy Squad · Score 8/10</div>
+  </div>
+  <div class="section-body">
+    <div class="squad-tags">
+      <span class="squad-tag">copy-squad</span>
+      <span class="squad-tag">hormozi-squad</span>
+    </div>
+
+    <div class="sub">
+      <h3>Headlines (use uma por criativo)</h3>
+      <ol>
+        <li><strong>"Cansado de estudar para o CBR sem ver resultado? O problema pode não ser você."</strong></li>
+        <li><strong>"O que muda na preparação de quem passa no CBR — e quem estuda do mesmo jeito todo ano."</strong></li>
+        <li><strong>"Turma CBR 2026.2 — vagas limitadas. O método que estrutura sua preparação para o exame."</strong></li>
+      </ol>
+    </div>
+
+    <div class="sub">
+      <h3>Copy — Topo do Funil (conteúdo que para o scroll)</h3>
+      <div class="copy-block">
+        "A maioria dos radiologistas que não vai bem no CBR não tem problema de conhecimento.<br>
+        Tem problema de método.<br><br>
+        Estudar muito sem direção é diferente de estudar certo.<br>
+        Os casos que mais caem, as áreas com maior peso, o tempo certo para cada módulo — isso muda tudo.<br><br>
+        👉 Veja como colegas seus mudaram a abordagem → [link]"
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Copy — Meio do Funil (captação de lead para call)</h3>
+      <div class="copy-block">
+        "Você está se preparando para o CBR 2026 e sente que falta estrutura?<br><br>
+        Em uma call gratuita de 30 minutos, eu mostro exatamente como organizamos a preparação de médicos que chegaram ao exame com muito mais segurança.<br><br>
+        Sem pressão. Só um diagnóstico honesto do seu momento.<br><br>
+        👉 <strong>Vagas para call estão abertas — mas são limitadas como a turma.</strong>"
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Copy — Fundo do Funil (remarketing · urgência real)</h3>
+      <div class="copy-block">
+        "Você já viu o que a Mentoria CBR oferece.<br><br>
+        Ainda estão abertas <strong>algumas vagas</strong> para a turma que começa em julho.<br>
+        Quando fechar, não tem próxima turma antes do exame.<br><br>
+        🔴 <strong>Se você vai se inscrever, a hora é essa.</strong> Deixar para depois pode significar mais um ciclo de preparação sem estrutura."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 7. CRIATIVOS ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">7</div>
+    <h2>Criativos — Templates por Arquétipo</h2>
+    <div class="badge">🎯 Traffic Masters</div>
+  </div>
+  <div class="section-body">
+    <table>
+      <tr><th>Arquétipo</th><th>Formato</th><th>Hook</th><th>Funil</th></tr>
+      <tr><td>🩻 Caso Clínico</td><td>Imagem + texto educativo</td><td>"Você reconhece esse achado radiológico?"</td><td class="td-green">Topo</td></tr>
+      <tr><td>🏆 Depoimento de processo</td><td>Card + citação do aluno</td><td>"Em 8 semanas aprendi mais do que em 1 ano sozinho"</td><td class="td-yellow">Meio</td></tr>
+      <tr><td>👨‍⚕️ Dr. Daniel Direto</td><td>Vídeo vertical 30–60s</td><td>"O que ninguém te fala sobre a preparação para o CBR"</td><td class="td-yellow">Meio / Fundo</td></tr>
+      <tr><td>😓→✅ Dor + Método</td><td>Estático com texto</td><td>"Cansado de estudar sem saber se está no caminho certo?"</td><td class="td-yellow">Meio</td></tr>
+      <tr><td>⏳ Urgência Vagas</td><td>Card dinâmico</td><td>"Turma CBR julho — restam X vagas"</td><td class="td-red">Fundo</td></tr>
+    </table>
+    <div class="highlight highlight-yellow">
+      <strong>Cadência de sprint:</strong> 5–6 criativos novos na semana 1 (testar). Identificar top 3 vencedores na semana 2 (CTR + CPL). Semana 3–4: escalar vencedores 20–30% a cada 48h, pausar perdedores imediatamente.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 8. PROJEÇÕES ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">8</div>
+    <h2>Projeções — Sprint 30 Dias · R$100/dia Mídia</h2>
+    <div class="badge">📊 Calculado · R$3.000 total</div>
+  </div>
+  <div class="section-body">
+
+    <div class="highlight highlight-red">
+      <strong>Premissa de budget:</strong> R$100/dia de mídia = R$3.000 em 30 dias. Este é o teto. A gestão (R$100/dia) é paga separadamente. Não há fase de escala lenta — estamos em sprint desde o dia 1.
+    </div>
+
+    <table>
+      <tr>
+        <th>Métrica</th>
+        <th>🟡 Conservador<br><small>CPL R$25</small></th>
+        <th>🟢 Realista<br><small>CPL R$18</small></th>
+        <th>🔵 Otimista<br><small>CPL R$12</small></th>
+      </tr>
+      <tr><td><strong>Budget mídia 30 dias</strong></td><td>R$3.000</td><td>R$3.000</td><td>R$3.000</td></tr>
+      <tr><td><strong>Leads gerados</strong></td><td>120</td><td>167</td><td>250</td></tr>
+      <tr><td><strong>Calls agendadas (25–30%)</strong></td><td>30</td><td>47</td><td>75</td></tr>
+      <tr><td><strong>Alunos fechados (40–50%)</strong></td><td class="td-yellow">12</td><td class="td-green">21</td><td class="td-green">38</td></tr>
+      <tr><td><strong>Receita gerada</strong></td><td>R$168.000</td><td>R$294.000</td><td>R$532.000</td></tr>
+      <tr><td><strong>ROAS sobre total (mídia+gestão)</strong></td><td>28×</td><td>49×</td><td>89×</td></tr>
+    </table>
+
+    <div class="highlight highlight-blue">
+      <strong>Para bater 25 alunos no cenário realista (CPL R$18):</strong> o gap de 4 alunos é coberto pela <strong>base orgânica existente</strong> — seguidores, lista de e-mail, leads antigos da conta. Reativar essa base com comunicação direta nos primeiros dias do sprint é obrigatório.
+    </div>
+
+    <div class="sub">
+      <h3>O CPL R$12–18 é realista?</h3>
+      <p>Sim. A conta já tem histórico de form nativo com CPC R$0,34. Campanhas de form nativo em Meta tipicamente convertem 30–50% dos cliques em lead. Isso coloca CPL entre R$0,70 e R$1,20 por clique × 10–20 cliques por lead = CPL R$7–24. A faixa R$12–18 é conservadora e atingível com os criativos certos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 9. SPRINT SEMANAL ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">9</div>
+    <h2>Sprint Semanal — Metas e Checkpoints</h2>
+    <div class="badge">📅 30 dias · Junho 2026</div>
+  </div>
+  <div class="section-body">
+
+    <div class="sprint-weeks">
+      <div class="week-card w1">
+        <div class="wnum">Semana 1 · Dias 1–7</div>
+        <div class="wtarget">0–3 vendas</div>
+        <p>Setup + primeiros criativos rodando + base orgânica reativada. Ainda em fase de aprendizado.</p>
+      </div>
+      <div class="week-card w2">
+        <div class="wnum">Semana 2 · Dias 8–14</div>
+        <div class="wtarget">4–8 vendas</div>
+        <p>Remarketing ativado. Top 3 criativos escalando. Calls chegando. Pipeline se formando.</p>
+      </div>
+      <div class="week-card w3">
+        <div class="wnum">Semana 3 · Dias 15–21</div>
+        <div class="wtarget">9–16 vendas</div>
+        <p>Funil completo operando. Urgência crescente. Escalar budget dos vencedores. 1 venda/dia.</p>
+      </div>
+      <div class="week-card w4">
+        <div class="wnum">Semana 4 · Dias 22–30</div>
+        <div class="wtarget">17–25 vendas</div>
+        <p>Remarketing agressivo de urgência. "Últimas vagas." Fechar todos os leads mornos. Sprint final.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Checkpoints de decisão (não pule nenhum)</h3>
+      <table>
+        <tr><th>Dia</th><th>Métrica de controle</th><th>Se OK → continua</th><th>Se abaixo → ação</th></tr>
+        <tr>
+          <td><strong>Dia 3</strong></td>
+          <td>CPM e CTR dos criativos</td>
+          <td>CTR > 1,5% → continuar</td>
+          <td class="td-red">CTR abaixo de 1% → trocar hook</td>
+        </tr>
+        <tr>
+          <td><strong>Dia 7</strong></td>
+          <td>CPL dos primeiros leads</td>
+          <td>CPL &lt; R$25 → escalar</td>
+          <td class="td-red">CPL > R$30 → revisar copy e criativo</td>
+        </tr>
+        <tr>
+          <td><strong>Dia 14</strong></td>
+          <td>Número de calls agendadas</td>
+          <td>≥ 10 calls → no caminho</td>
+          <td class="td-red">Abaixo de 10 → aumentar urgência e follow-up</td>
+        </tr>
+        <tr>
+          <td><strong>Dia 21</strong></td>
+          <td>Vendas acumuladas</td>
+          <td>≥ 10 vendas → sprint final</td>
+          <td class="td-red">Abaixo de 8 → escalar remarketing + reativar base</td>
+        </tr>
+        <tr>
+          <td><strong>Dia 28</strong></td>
+          <td>Vendas + vagas restantes</td>
+          <td>≥ 20 vendas → fechar com urgência</td>
+          <td class="td-red">Abaixo → oferta de bônus de encerramento</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="sub">
+      <h3>Reativação da base orgânica — obrigatório na semana 1</h3>
+      <div class="card-grid card-grid-2">
+        <div class="card card-blue">
+          <h4>📱 Instagram / Stories</h4>
+          <p>Comunicação direta para seguidores existentes sobre abertura da turma. CTA direto para call.</p>
+        </div>
+        <div class="card card-green">
+          <h4>📧 Lista de e-mails / leads antigos</h4>
+          <p>Reativar leads de campanhas anteriores. Essa é a fonte de vendas mais rápidas — já conhecem o Dr. Daniel.</p>
+        </div>
+      </div>
+      <div class="highlight highlight-green">
+        <strong>Por que isso importa:</strong> No cenário realista (21 fechamentos via paid), faltam 4 para a meta de 25. A base orgânica cobre esse gap facilmente — são pessoas que já têm contato com a Didática Radio e precisam apenas de uma nudge.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 10. PROPOSTA ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="num">10</div>
+    <h2>Proposta de Gestão + Próximos Passos</h2>
+    <div class="badge">💼 Proposta Comercial</div>
+  </div>
+  <div class="section-body">
+
+    <div class="sub">
+      <h3>O que o Dr. Daniel investe</h3>
+      <div class="card-grid card-grid-2">
+        <div class="card card-navy">
+          <h4>Mídia (Meta Ads)</h4>
+          <div class="metric">R$100/dia</div>
+          <p>= R$3.000 em 30 dias<br>Pago diretamente ao Facebook<br>Separado da gestão</p>
+        </div>
+        <div class="card card-blue">
+          <h4>Gestão de Tráfego</h4>
+          <div class="metric" style="color:var(--navy)">R$100/dia</div>
+          <p>= R$3.000/mês<br>Pago ao gestor<br>Separado da mídia</p>
+        </div>
+      </div>
+      <div class="highlight highlight-blue">
+        <strong>Investimento total:</strong> R$6.000 no mês de junho (mídia + gestão). Com 20 alunos fechados = R$280.000 de receita. ROI de 46× sobre o investimento total.
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>O que está incluído na gestão</h3>
+      <ul class="checklist">
+        <li>Estratégia de sprint 30 dias (funil 3 camadas)</li>
+        <li>Criação e teste de criativos (5–6 por semana)</li>
+        <li>Estruturação completa das campanhas (topo/meio/fundo)</li>
+        <li>Otimização diária (pausar perdedores, escalar vencedores)</li>
+        <li>Gestão de públicos — quentes, mornos, frios, lookalikes</li>
+        <li>Checkpoints semanais com tomada de decisão baseada em dados</li>
+        <li>Relatório semanal com números reais e próxima ação</li>
+        <li>Reunião de alinhamento quinzenal</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3>Para começar — checklist de acesso (semana 1)</h3>
+      <ul class="checklist">
+        <li>Acesso ao Business Manager (BM) da Didática Radio</li>
+        <li>Pixel Meta validado na landing page da Mentoria CBR</li>
+        <li>3 depoimentos em vídeo de ex-alunos (processo, não resultado)</li>
+        <li>Fotos/vídeos do Dr. Daniel (consultório + casual + casos clínicos)</li>
+        <li>Lista de leads anteriores para reativação orgânica</li>
+        <li>Acesso à conta de anúncios Meta Ads existente</li>
+      </ul>
+    </div>
+
+    <div class="highlight highlight-red">
+      <strong>🔴 Urgência operacional:</strong> Começar na primeira semana de junho para ter 30 dias completos. Cada dia de atraso no setup é um dia a menos de dados e uma call a menos no pipeline.
+    </div>
+  </div>
+</div>
+
+<!-- SQUADS -->
+<div class="section">
+  <div class="section-header">
+    <div class="num" style="font-size:16px">🤖</div>
+    <h2>Inteligência por Trás do Briefing</h2>
+    <div class="badge">xquad-l3m · 5 squads</div>
+  </div>
+  <div class="section-body">
+    <table>
+      <tr><th>Squad</th><th>Entregável principal</th><th>Score</th></tr>
+      <tr><td>🎯 Traffic Masters</td><td>Diagnóstico da conta, funil, projeções, checkpoints</td><td class="td-green">8/10</td></tr>
+      <tr><td>💼 Hormozi Squad</td><td>Stack de valor, script de call, urgência real</td><td class="td-green">8/10</td></tr>
+      <tr><td>📖 Storytelling</td><td>Roteiro narrativo do Dr. Daniel (hook/conflito/virada/CTA)</td><td class="td-green">9/10</td></tr>
+      <tr><td>🏷️ Brand Squad</td><td>Posicionamento, arquétipo O Sábio, sequência de e-mail</td><td class="td-green">8/10</td></tr>
+      <tr><td>✍️ Copy Squad</td><td>Headlines + copies dos 3 níveis do funil</td><td class="td-green">8/10</td></tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <strong>Briefing Estratégico v2 — Sprint 30 Dias · Mentoria CBR 2026.2 · Didática Radio</strong><br>
+  Gerado por xquad-l3m · 5 squads especializados · GPT-4o-mini · Maio 2026
+</div>
+
+</body>
+</html>
