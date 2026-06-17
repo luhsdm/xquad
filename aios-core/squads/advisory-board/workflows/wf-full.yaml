@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: business-health-check.md
+  - task: strategic-roadmap.md

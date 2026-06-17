@@ -1,0 +1,13 @@
+description: "Squad especializado em análise de dados, métricas e growth analytics: definição de North Star Metric e métricas de ativação/retenção/engajamento, instrumentação de eventos e modelagem de funis de conversão (cohort analysis, drop-off por etapa), arquitetura de dashboards de BI (visão executiva vs operacional, escolha de visualização por tipo de métrica) e experimentação A/B (hipóteses testáveis, significância estatística, priorização ICE/PIE). Ativar quando a tarefa envolve MEDIR, INSTRUMENTAR ou EXPLICAR comportamento via dados — não envolve gestão/otimização de mídia paga (isso é traffic-masters, focado em campanhas e budget de anúncios) nem decisões de identidade/percepção de marca (isso é design-squad/brand-squad). Cobre desde diagnóstico rápido de maturidade de instrumentação até construção de dashboard completo e análise de funil com narrativa de dados para decisão executiva."
+tags: [growth-analytics, funis-de-conversao, dashboards-bi, experimentacao-ab, data-storytelling]
+components:
+  agents:
+    - agent-growth-analytics.md
+    - agent-modelagem-funis.md
+    - agent-dashboards-bi.md
+    - agent-experimentacao-ab.md
+    - agent-data-storytelling.md
+  tasks:
+    - diagnose
+    - build-dashboard
+    - analyze-funnel

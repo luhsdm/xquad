@@ -1,0 +1,13 @@
+description: "Squad especializado em finanças operacionais de negócios: unit economics (CAC, LTV, payback), precificação (value-based pricing, testes de sensibilidade de preço), fluxo de caixa (projeções, capital de giro, runway) e modelagem financeira (cenários, DRE gerencial, EBITDA). Ative este squad quando a pergunta envolver números financeiros concretos, decisões de preço, saúde de caixa ou construção de modelos/projeções — diferente do advisory-board, que é genérico e serve como fallback para discussões estratégicas amplas sem foco financeiro quantitativo."
+tags: [unit-economics, precificacao, fluxo-de-caixa, modelagem-financeira, controladoria]
+components:
+  agents:
+    - agent-unit-economics.md
+    - agent-pricing.md
+    - agent-fluxo-caixa.md
+    - agent-modelagem-financeira.md
+    - agent-controladoria.md
+  tasks:
+    - diagnose
+    - build-pricing-model
+    - analyze-cash-flow

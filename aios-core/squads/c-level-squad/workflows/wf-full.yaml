@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: executive-decision-brief.md
+  - task: board-presentation-outline.md

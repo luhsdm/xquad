@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: design-landing-page.md
+  - task: create-visual-identity-kit.md

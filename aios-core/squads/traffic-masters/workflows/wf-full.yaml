@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: audit-campaigns.md
+  - task: scale-budget.md

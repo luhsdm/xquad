@@ -1,0 +1,13 @@
+description: "Squad especializado em design visual, UI/UX e identidade visual aplicada a peças de marketing: arquitetura de interfaces e fluxos de usuário, criativos de performance para Meta/Google Ads, design system e consistência de marca, design de landing pages orientado a conversão e motion design para social media. Ativar quando a tarefa envolve criar, diagnosticar ou redesenhar peças visuais, telas, interfaces, landing pages ou animações — não envolve redação de copy em si, gestão de orçamento de mídia paga nem análise de métricas de performance fora do campo visual."
+tags: [design-visual, ui-ux, identidade-visual, design-system, landing-page-design, criativos-de-performance, motion-design, hierarquia-visual]
+components:
+  agents:
+    - agent-ui-ux.md
+    - agent-design-performance.md
+    - agent-design-system.md
+    - agent-landing-pages.md
+    - agent-motion-social.md
+  tasks:
+    - diagnose
+    - design-landing-page
+    - create-visual-identity-kit

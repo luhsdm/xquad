@@ -1,0 +1,13 @@
+description: "Squad de fallback/genérico do orquestrador: ativado quando a demanda do usuário não se encaixa em nenhum squad especializado (branding, finanças, storytelling, tráfego pago, cibersegurança etc). Funciona como um conselho consultivo sênior multidisciplinar que entrega diagnóstico estratégico de negócio amplo, cobrindo mercado, operações, pessoas/cultura e finanças/crescimento — visão de board de conselheiros experientes, não um especialista de nicho. Use este squad como ponto de entrada padrão quando a tarefa é ambígua, genérica demais para outro squad, ou exige visão 360° antes de direcionar para uma frente específica."
+tags: [diagnostico-geral, estrategia-de-negocios, fallback, conselho-consultivo, visao-360]
+components:
+  agents:
+    - agent-estrategia-geral.md
+    - agent-visao-mercado.md
+    - agent-operacoes.md
+    - agent-pessoas-cultura.md
+    - agent-financas-crescimento.md
+  tasks:
+    - diagnose
+    - business-health-check
+    - strategic-roadmap

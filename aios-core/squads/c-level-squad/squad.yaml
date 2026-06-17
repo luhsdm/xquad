@@ -1,0 +1,13 @@
+description: "Squad de visão executiva C-level (CEO, CFO, CMO, COO, CTO/CPO) para decisões estratégicas corporativas de topo que vão para o board: grandes apostas estratégicas, alocação de capital, M&A, estrutura de capital, posicionamento competitivo de mercado, governança corporativa, scaling operacional cross-funcional e arquitetura tecnológica de longo prazo. Ative este squad quando a pergunta exigir a lente de quem responde ao board e aloca recursos da empresa inteira em horizonte de 3-5 anos — diferente do advisory-board genérico (diagnóstico amplo sem mandato de capital/governança) e diferente do money-squad (finanças operacionais e táticas como unit economics, precificação e fluxo de caixa do dia a dia)."
+tags: [c-level, board, governanca-corporativa, alocacao-de-capital, fusoes-e-aquisicoes, visao-de-futuro-3-5-anos, posicionamento-competitivo, decisao-executiva]
+components:
+  agents:
+    - agent-ceo-visionario.md
+    - agent-cfo-capital.md
+    - agent-cmo-crescimento.md
+    - agent-coo-execucao.md
+    - agent-ctopo-tecnologia.md
+  tasks:
+    - diagnose
+    - executive-decision-brief
+    - board-presentation-outline

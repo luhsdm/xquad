@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: build-pricing-model.md
+  - task: analyze-cash-flow.md

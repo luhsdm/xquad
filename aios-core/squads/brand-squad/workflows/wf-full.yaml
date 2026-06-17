@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: define-brand-positioning.md
+  - task: create-brand-voice-guide.md

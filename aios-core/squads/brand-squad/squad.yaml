@@ -1,0 +1,13 @@
+description: "Squad especializado em posicionamento de marca, branding e narrativa de marca: definição de território de marca, arquitetura de portfólio (marca mãe, submarcas, endossos), brand voice/tom de voz, pesquisa de concorrência para diferenciação e naming/identidade verbal. Ativar quando a tarefa envolve decisões estratégicas de IDENTIDADE e PERCEPÇÃO de marca (quem somos, como nos diferenciamos, como falamos, como nosso portfólio se organiza) — não envolve storytelling de conteúdo pontual, copywriting de resposta direta nem gestão/otimização de mídia paga. Cobre desde o diagnóstico rápido de posicionamento até a criação de plataforma de marca completa e guia de voz."
+tags: [posicionamento-de-marca, branding, identidade-verbal, arquitetura-de-marca, naming]
+components:
+  agents:
+    - agent-posicionamento.md
+    - agent-arquitetura-marca.md
+    - agent-brand-voice.md
+    - agent-pesquisa-concorrencia.md
+    - agent-naming.md
+  tasks:
+    - diagnose
+    - define-brand-positioning
+    - create-brand-voice-guide

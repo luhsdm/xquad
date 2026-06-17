@@ -1,0 +1,13 @@
+description: "Squad especializado em narrativa e storytelling: construção de arcos emocionais, roteirização de vídeo, jornada do herói aplicada a conteúdo e marca, storytelling de fundador (origin story) e arcos persuasivos para vendas. Ativar quando a tarefa envolve ESTRUTURA NARRATIVA e ROTEIRO (qual história contar, em que ordem, com qual virada emocional, qual gancho e qual clímax) — não envolve definição de posicionamento estratégico de marca (isso é do brand-squad) nem redação final de copy de resposta direta sem estrutura de história (isso é do copy-squad). Cobre desde o diagnóstico rápido de uma narrativa existente até a construção completa de arco narrativo e roteiro de história de marca."
+tags: [storytelling, narrativa, roteiro, jornada-do-heroi, arco-emocional]
+components:
+  agents:
+    - agent-jornada-heroi.md
+    - agent-storytelling-redes-sociais.md
+    - agent-roteirizacao-video.md
+    - agent-storytelling-fundador.md
+    - agent-arco-emocional-vendas.md
+  tasks:
+    - diagnose
+    - build-narrative-arc
+    - write-brand-story
