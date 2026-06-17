@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: build-grand-slam-offer.md
+  - task: engineer-guarantee.md

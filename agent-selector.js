@@ -1,10 +1,10 @@
 // agent-selector.js
 
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import fs from "fs";
-import { withRetry } from "./utils.js";
+import { withRetry, extractText } from "./utils.js";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 function loadFolder(folderPath) {
   if (!fs.existsSync(folderPath)) return "";
@@ -37,9 +37,10 @@ export async function chooseAgents(squadPath, agentsList, userInput, taskContent
 
   // ── NÍVEL 1: pré-seleção com retry ──
   const preSelect = await withRetry(() =>
-    client.responses.create({
-      model: "gpt-4o-mini",
-      input: `
+    client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 256,
+      messages: [{ role: "user", content: `
 Você é um seletor de especialistas.
 
 Com base na estrutura do squad abaixo, escolha os ${nPreSelect} agentes com maior potencial para essa tarefa.
@@ -58,11 +59,11 @@ Regras:
 - escolha EXATAMENTE ${nPreSelect} agentes
 - use apenas nomes que aparecem em components.agents no yaml
 - retorne apenas os nomes dos arquivos separados por vírgula
-      `,
+      ` }],
     })
   );
 
-  const preSelected = preSelect.output_text
+  const preSelected = extractText(preSelect)
     .trim()
     .split(",")
     .map(a => a.trim())
@@ -84,9 +85,10 @@ Regras:
   const dataContext       = loadFolder(`${squadPath}/data`);
 
   const finalSelect = await withRetry(() =>
-    client.responses.create({
-      model: "gpt-4o-mini",
-      input: `
+    client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 256,
+      messages: [{ role: "user", content: `
 Você é um seletor de especialistas de elite.
 
 Analise em profundidade os agentes abaixo e escolha os 3 MELHORES para essa execução específica.
@@ -117,13 +119,11 @@ Regras:
 - escolha EXATAMENTE 3 agentes dos candidatos acima
 - não invente nomes
 - retorne apenas os nomes dos arquivos separados por vírgula
-      `,
+      ` }],
     })
   );
 
-  // Substitui o trecho final do agent-selector.js por esse:
-
-  const raw = finalSelect.output_text.trim();
+  const raw = extractText(finalSelect).trim();
   console.log(`🔎 [RAW finalSelect]: "${raw}"`);
 
   const clean = raw.replace(/\*\*/g, "").replace(/`/g, "").trim();

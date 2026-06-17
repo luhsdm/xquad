@@ -1,10 +1,11 @@
 // router.js
 
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import fs from "fs";
 import yaml from "js-yaml";
+import { extractText } from "./utils.js";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const squadsPath = "./aios-core/squads";
 
 function loadSquadDescriptions() {
@@ -26,9 +27,10 @@ function loadSquadDescriptions() {
 export async function chooseSquad(userInput) {
   const squadDescriptions = loadSquadDescriptions();
 
-  const response = await client.responses.create({
-    model: "gpt-4o-mini",
-    input: `
+  const response = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 64,
+    messages: [{ role: "user", content: `
 Você é um roteador inteligente de squads.
 
 Analise a intenção do usuário e escolha o squad mais adequado.
@@ -43,8 +45,8 @@ Regras:
 
 Pergunta:
 "${userInput}"
-    `,
+    ` }],
   });
 
-  return response.output_text.trim();
+  return extractText(response).trim();
 }

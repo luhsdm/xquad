@@ -1,10 +1,11 @@
 // orchestrator.js
 
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import fs from "fs";
 import yaml from "js-yaml";
+import { extractText } from "./utils.js";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const squadsPath = "./aios-core/squads";
 
 function loadAllSquadDescriptions() {
@@ -23,9 +24,10 @@ function loadAllSquadDescriptions() {
 export async function orchestrate(question) {
   const squadDescriptions = loadAllSquadDescriptions();
 
-  const response = await client.responses.create({
-    model: "gpt-4o-mini",
-    input: `
+  const response = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 1024,
+    messages: [{ role: "user", content: `
 Você é o orquestrador central de um sistema multi-agente.
 
 Analise a intenção do usuário e decida:
@@ -52,11 +54,11 @@ Regras:
 - escolha a task que mais se alinha com o pedido do usuário
 - use apenas nomes de squads e tasks que existem nas listas acima
 - retorne APENAS o JSON, sem texto adicional
-    `,
+    ` }],
   });
 
   try {
-    const raw = response.output_text.trim().replace(/```json|```/g, "");
+    const raw = extractText(response).trim().replace(/```json|```/g, "");
     const parsed = JSON.parse(raw);
     console.log("🧠 Plano do orquestrador:", JSON.stringify(parsed.plan, null, 2));
     console.log("📋 Motivo:", parsed.reason);

@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: write-email-sequence.md
+  - task: write-sales-page.md

@@ -2,20 +2,20 @@
 
 import fs from "fs";
 import yaml from "js-yaml";
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import { chooseAgents } from "./agent-selector.js";
 import { chooseMode } from "./mode-selector.js";
 import { orchestrate } from "./orchestrator.js";
-import { withRetry, limitedParallel } from "./utils.js";
-import { 
-  CRITIC_PROMPT, 
-  EDITOR_PROMPT, 
-  SCORE_PROMPT, 
+import { withRetry, limitedParallel, extractText } from "./utils.js";
+import {
+  CRITIC_PROMPT,
+  EDITOR_PROMPT,
+  SCORE_PROMPT,
   SYNTHESIZER_PROMPT,
-  AGENT_ACTIVATION_PROMPT 
-} from "./prompts.js"; 
+  AGENT_ACTIVATION_PROMPT
+} from "./prompts.js";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const squadsPath = "./aios-core/squads";
 
 function loadFolderContent(folderPath) {
@@ -31,10 +31,10 @@ function runAgent(agentPath, agentFile, taskContent, question, context) {
   const agentPrompt = fs.readFileSync(agentPath, "utf8");
 
   return withRetry(() =>
-    client.responses.create({
-      model: "gpt-4o-mini",
-      max_output_tokens: 8000,
-      input: `
+    client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 8000,
+      messages: [{ role: "user", content: `
 IDIOMA OBRIGATÓRIO: Responda SEMPRE em português brasileiro. Esta regra tem prioridade máxima.
 
 ---
@@ -64,8 +64,8 @@ INSTRUÇÕES DE EXECUÇÃO:
 - PROIBIDO GENERICISMO: Frases como "soluções inovadoras" resultam em descarte da resposta
 - Seja específico, direto e prático. Entregue resultado real, não teoria.
 - Responda SEMPRE em português brasileiro.
-      `,
-    }).then(r => `[${agentFile}]:\n${r.output_text}`)
+      ` }],
+    }).then(r => `[${agentFile}]:\n${extractText(r)}`)
   );
 }
 
@@ -176,21 +176,23 @@ export async function runAI(question) {
 
   const [critiqueResponse, synthesisResponse] = await Promise.all([
     withRetry(() =>
-      client.responses.create({
-        model: "gpt-4o-mini",
-        input: CRITIC_PROMPT(mainRaw + "\n\n" + complementaryRaw, question),
+      client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 4096,
+        messages: [{ role: "user", content: CRITIC_PROMPT(mainRaw + "\n\n" + complementaryRaw, question) }],
       })
     ),
     withRetry(() =>
-      client.responses.create({
-        model: "gpt-4o-mini",
-        input: SYNTHESIZER_PROMPT(mainRaw, complementaryRaw),
+      client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 4096,
+        messages: [{ role: "user", content: SYNTHESIZER_PROMPT(mainRaw, complementaryRaw) }],
       })
     ),
   ]);
 
-  const critique = critiqueResponse.output_text;
-  const cleanContext = synthesisResponse.output_text;
+  const critique = extractText(critiqueResponse);
+  const cleanContext = extractText(synthesisResponse);
 
   let finalOutput = "";
   let currentScore = 0;
@@ -209,28 +211,31 @@ export async function runAI(question) {
     } : null;
 
     const finalResponse = await withRetry(() =>
-      client.responses.create({
-        model: "gpt-4o-mini",
-        max_output_tokens: 8000,
-        input: EDITOR_PROMPT(cleanContext, critique, question, squads[0], previousAttempt),
+      client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 8000,
+        messages: [{ role: "user", content: EDITOR_PROMPT(cleanContext, critique, question, squads[0], previousAttempt) }],
       })
     );
 
-    finalOutput = finalResponse.output_text;
+    finalOutput = extractText(finalResponse);
 
     const scoreResponse = await withRetry(() =>
-      client.responses.create({
-        model: "gpt-4o-mini",
-        input: SCORE_PROMPT(finalOutput, question),
+      client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1024,
+        messages: [{ role: "user", content: SCORE_PROMPT(finalOutput, question) }],
       })
     );
 
+    const scoreText = extractText(scoreResponse);
+
     try {
-      scoreDetails = JSON.parse(scoreResponse.output_text.match(/\{.*\}/s)?.[0] || "{}");
+      scoreDetails = JSON.parse(scoreText.match(/\{.*\}/s)?.[0] || "{}");
       currentScore = scoreDetails.overall || 0;
       console.log(`✨ Tentativa ${attempts + 1} - Score: ${currentScore}/10 (C:${scoreDetails.clarity} S:${scoreDetails.specificity} P:${scoreDetails.persuasion})`);
     } catch {
-      currentScore = parseInt(scoreResponse.output_text.match(/\d+/)?.[0] || "0");
+      currentScore = parseInt(scoreText.match(/\d+/)?.[0] || "0");
       console.log(`✨ Tentativa ${attempts + 1} - Score (fallback): ${currentScore}/10`);
     }
 

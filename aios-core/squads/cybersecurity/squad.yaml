@@ -1,0 +1,13 @@
+description: "Squad de cibersegurança técnica e governança de segurança da informação: pentest e red team ofensivo, hardening de infraestrutura e cloud, resposta a incidentes e forense (blue team), segurança de aplicações (AppSec) e compliance/governança de risco (LGPD, ISO 27001, NIST CSF, CIS Controls)."
+tags: [cybersecurity, pentest, red-team, blue-team, incident-response, appsec, hardening, compliance, lgpd, iso27001, nist-csf, owasp, mitre-attck]
+components:
+  agents:
+    - agent-pentest-redteam.md
+    - agent-hardening-infra.md
+    - agent-incident-response.md
+    - agent-appsec.md
+    - agent-compliance-governanca.md
+  tasks:
+    - diagnose
+    - run-pentest-assessment
+    - build-incident-response-plan

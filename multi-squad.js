@@ -1,8 +1,9 @@
 // multi-squad.js
 
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
+import { extractText } from "./utils.js";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const VALID_SQUADS = new Set([
   "copy-squad", "traffic-masters", "data-squad", "design-squad",
@@ -13,9 +14,10 @@ const VALID_SQUADS = new Set([
 export async function chooseAdditionalSquads(question, mainResult, primarySquad = "") {
   const resultSummary = mainResult.slice(0, 300);
 
-  const response = await client.responses.create({
-    model: "gpt-4o-mini",
-    input: `
+  const response = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 64,
+    messages: [{ role: "user", content: `
 Usuário pediu: ${question}
 Resultado resumido: ${resultSummary}
 Squad principal já usado: ${primarySquad}
@@ -31,10 +33,10 @@ Regras:
 - se nenhum agregar, responda: none
 - retorne apenas nomes separados por vírgula
 
-Resposta:`,
+Resposta:` }],
   });
 
-  const raw = response.output_text.trim().toLowerCase();
+  const raw = extractText(response).trim().toLowerCase();
 
   if (raw === "none" || raw === "" || raw === "nenhum") return [];
 

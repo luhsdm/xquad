@@ -1,12 +1,13 @@
 import fs from "fs";
 import yaml from "js-yaml";
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import readlineSync from "readline-sync";
 import { chooseSquad } from "./router.js";
 import { chooseAgents } from "./agent-selector.js";
+import { extractText } from "./utils.js";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 const squadsPath = "./aios-core/squads";
@@ -100,9 +101,10 @@ async function run() {
 
       const agentPrompt = fs.readFileSync(agentPath, "utf8");
 
-      const response = await client.responses.create({
-        model: "gpt-5-mini",
-        input: `
+      const response = await client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 4096,
+        messages: [{ role: "user", content: `
 ${agentPrompt}
 
 === CONFIG ===
@@ -121,12 +123,12 @@ ${taskContent}
 ${context}
 
 Execute com foco e clareza.
-        `,
+        ` }],
       });
 
       return {
         agent: agentFile,
-        text: response.output_text,
+        text: extractText(response),
       };
     });
 
@@ -143,35 +145,39 @@ Execute com foco e clareza.
   }
 
   // 🔥 ORQUESTRADOR FINAL
-  const finalResponse = await client.responses.create({
-    model: "gpt-5-mini",
-    input: `
+  const finalResponse = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 4096,
+    messages: [{ role: "user", content: `
 Você é um estrategista chefe.
 
 ${context}
 
 Consolide tudo em um plano direto, claro e executável.
-    `,
+    ` }],
   });
 
+  const finalText = extractText(finalResponse);
+
   console.log("\n🔥 DECISÃO FINAL:\n");
-  console.log(finalResponse.output_text);
+  console.log(finalText);
 
   // 🔥 SUGESTÃO DE OUTROS SQUADS
-  const suggestion = await client.responses.create({
-    model: "gpt-5-mini",
-    input: `
+  const suggestion = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 1024,
+    messages: [{ role: "user", content: `
 Baseado nisso:
 
-${finalResponse.output_text}
+${finalText}
 
 Sugira outros squads que podem ajudar.
 Responda curto.
-    `,
+    ` }],
   });
 
   console.log("\n💡 Outros squads recomendados:");
-  console.log(suggestion.output_text);
+  console.log(extractText(suggestion));
 }
 
 run();

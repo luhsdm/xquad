@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: build-dashboard.md
+  - task: analyze-funnel.md

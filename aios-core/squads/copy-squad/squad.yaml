@@ -1,0 +1,13 @@
+description: "Squad especializado em copywriting de resposta direta: cartas de vendas, sequências de e-mail, headlines/hooks, copy de anúncios em texto (Meta/Google) e storytelling de vendas. Ativar quando a tarefa envolve escrever ou revisar TEXTO PERSUASIVO que precisa converter (vender, gerar lead, reativar, reter) — não envolve gestão de mídia paga, análise de métricas/dados de campanha nem produção de peças visuais/design. Cobre desde o diagnóstico de uma copy existente até a redação completa de página de vendas e sequência de e-mails."
+tags: [copywriting, resposta-direta, email-marketing, headlines, copy-ads, storytelling-vendas, paginas-de-venda, persuasao-textual]
+components:
+  agents:
+    - agent-copywriter-resposta-direta.md
+    - agent-email-marketing.md
+    - agent-headlines-hooks.md
+    - agent-copy-ads.md
+    - agent-storytelling-vendas.md
+  tasks:
+    - diagnose
+    - write-email-sequence
+    - write-sales-page

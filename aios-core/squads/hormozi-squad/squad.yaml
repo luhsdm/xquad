@@ -1,0 +1,23 @@
+description: "Squad especializado em construção de ofertas comerciais irresistíveis ('grand slam offers') para marketing de resposta direta. Domina a Value Equation (Dream Outcome, Likelihood of Success, Time Delay, Effort & Sacrifice), engenharia de garantias agressivas, empilhamento de bônus (bonus stacking), mecanismos de escassez e urgência genuína, e escala de negócios via os três pilares aquisição-entrega-retenção (CAC, fulfillment, retenção). Diferente de squads de copywriting genérico (foco é estrutura econômica da oferta, não redação de anúncios) e de squads financeiros/C-level (foco é conversão e oferta, não gestão executiva ampla)."
+tags:
+  - ofertas-irresistiveis
+  - grand-slam-offer
+  - value-equation
+  - engenharia-de-garantias
+  - bonus-stacking
+  - escassez-e-urgencia
+  - aquisicao-entrega-retencao
+  - marketing-de-resposta-direta
+  - escala-de-negocios
+  - precificacao-de-ofertas
+components:
+  agents:
+    - agent-mestre-ofertas.md
+    - agent-arquiteto-valor.md
+    - agent-engenheiro-garantias.md
+    - agent-estrategista-escassez.md
+    - agent-cacador-gargalos.md
+  tasks:
+    - diagnose
+    - build-grand-slam-offer
+    - engineer-guarantee

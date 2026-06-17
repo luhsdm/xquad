@@ -1,10 +1,11 @@
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import fs from "fs";
 import yaml from "js-yaml";
 import readlineSync from "readline-sync";
+import { extractText } from "./utils.js";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 // 1. Ler o squad.yaml
@@ -25,12 +26,13 @@ async function runSquad() {
   let responses = [];
 
   for (const agent of agents) {
-    const res = await client.responses.create({
-      model: "gpt-5-mini",
-      input: `${agent.prompt}\nPergunta: ${question}`,
+    const res = await client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 2048,
+      messages: [{ role: "user", content: `${agent.prompt}\nPergunta: ${question}` }],
     });
 
-    const text = res.output_text;
+    const text = extractText(res);
 
     console.log(`\n🧠 ${agent.role}:\n${text}`);
 
@@ -38,20 +40,21 @@ async function runSquad() {
   }
 
   // 4. Orquestrador (decisão final)
-  const final = await client.responses.create({
-    model: "gpt-5-mini",
-    input: `
+  const final = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 2048,
+    messages: [{ role: "user", content: `
     Você é um CEO final tomando decisão.
 
     Aqui estão as opiniões:
     ${responses.join("\n")}
 
     Agora dê uma decisão clara, direta e executável.
-    `,
+    ` }],
   });
 
   console.log("\n🔥 DECISÃO FINAL:\n");
-  console.log(final.output_text);
+  console.log(extractText(final));
 }
 
 runSquad();

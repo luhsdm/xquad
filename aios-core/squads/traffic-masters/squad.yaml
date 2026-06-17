@@ -1,0 +1,13 @@
+description: "Squad especializado em gestão e otimização de tráfego pago: estratégia de mix de plataformas, estrutura e otimização de campanhas Meta Ads e Google Ads, direção de criativos para anúncios e decisões de escala/corte de orçamento baseadas em ROAS, CAC e LTV. Ativar quando a tarefa envolve operar leilão de anúncios, estruturar campanhas, diagnosticar contas de mídia paga ou decidir escalar/pausar investimento — não envolve redação de copy em si, análise de dados fora de mídia paga nem produção de peças visuais finalizadas."
+tags: [trafego-pago, midia-paga, meta-ads, google-ads, leilao-de-anuncios, otimizacao-de-campanhas, roas-cac-ltv, escala-de-orcamento]
+components:
+  agents:
+    - agent-estrategia-midia-paga.md
+    - agent-meta-ads.md
+    - agent-google-ads.md
+    - agent-criativos-ads.md
+    - agent-analise-roas-cac-ltv.md
+  tasks:
+    - diagnose
+    - audit-campaigns
+    - scale-budget

@@ -1,0 +1,4 @@
+phases:
+  - task: diagnose.md
+  - task: build-narrative-arc.md
+  - task: write-brand-story.md
