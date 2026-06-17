@@ -5,11 +5,11 @@ export async function withRetry(fn, maxRetries = 3) {
     try {
       return await fn();
     } catch (err) {
-      const is429 = err?.status === 429 || err?.code === "rate_limit_exceeded";
+      const is429 = err?.status === 429 || err?.error?.error?.type === "rate_limit_error";
       if (!is429 || attempt === maxRetries) throw err;
 
-      const resetHeader = err?.headers?.get?.("x-ratelimit-reset-tokens") || "";
-      const seconds = parseResetSeconds(resetHeader) || attempt * 5;
+      const retryAfter = err?.headers?.get?.("retry-after");
+      const seconds = (retryAfter ? parseInt(retryAfter) : null) || attempt * 5;
 
       console.log(`⏳ Rate limit — aguardando ${seconds}s (tentativa ${attempt}/${maxRetries})`);
       await sleep(seconds * 1000);
@@ -17,17 +17,15 @@ export async function withRetry(fn, maxRetries = 3) {
   }
 }
 
-function parseResetSeconds(header) {
-  if (!header) return null;
-  const minMatch = header.match(/(\d+)m/);
-  const secMatch = header.match(/([\d.]+)s/);
-  const minutes = minMatch ? parseInt(minMatch[1]) : 0;
-  const seconds = secMatch ? parseFloat(secMatch[1]) : 0;
-  return Math.ceil(minutes * 60 + seconds) + 1;
-}
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function extractText(response) {
+  return response.content
+    .filter(block => block.type === "text")
+    .map(block => block.text)
+    .join("");
 }
 // Adiciona no utils.js existente
 
